@@ -228,7 +228,7 @@ function Review({ order, edit }: { order: Order; edit: (step: Step) => void }) {
               <strong>{item.quantity} × {item.name}</strong>
               <div className="service-list">
                 {services.length ? services.map(({ id, label, icon }) =>
-                  <span className="service-chip" key={id}><Icon name={icon} />{label}</span>) : <span className="service-chip transport"><Icon name="truck" />Só transporte</span>}
+                  <span className="service-chip" data-service={id} key={id}><Icon name={icon} />{label}</span>) : <span className="service-chip transport"><Icon name="truck" />Só transporte</span>}
               </div>
               {item.notes.trim() && <p className="item-note">{item.notes}</p>}
             </li>;

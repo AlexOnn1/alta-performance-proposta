@@ -3,15 +3,25 @@
     <div class="brand">
       <img src="alta-performance.png" width="84" height="84" alt="Alta Performance Mudanças" class="brand-logo">
       <div class="min-w-0">
-        <div class="brand-context">Alta Performance Mudanças <span aria-hidden="true">/</span> Curitiba, PR</div>
+        <div class="brand-context">Alta Performance Mudanças</div>
         <h1>Pedido de orçamento de mudança</h1>
       </div>
     </div>
-    <span class="demo-label"><span aria-hidden="true"></span>Demonstração</span>
+    <span class="demo-label"><app-icon name="clipboard"></app-icon>Demonstração</span>
   </div>
 </header>
 
 <main class="page-width">
+  @if (view() === 'customer') {
+    <section class="moving-hero" aria-labelledby="moving-hero-title">
+      <div class="moving-hero-copy">
+        <span class="moving-hero-location"><app-icon name="pin"></app-icon>Curitiba, PR</span>
+        <h2 id="moving-hero-title">Sua mudança,<br>de ponta a ponta.</h2>
+        <p>Informe o trajeto, o que vai levar e como a equipe pode ajudar na origem e no destino.</p>
+      </div>
+      <div class="moving-hero-image" aria-hidden="true"></div>
+    </section>
+  }
   <div class="view-header">
     <h2 class="view-title" #viewTitle tabindex="-1">{{ view() === 'customer' ? 'Seu pedido' : 'Ficha de orçamento' }}</h2>
     <nav class="view-switch" aria-label="Visões da demonstração">
@@ -70,7 +80,7 @@
                     </div>
                     <div class="service-list" aria-label="Serviços solicitados">
                       @for (service of services(item); track service.id) {
-                        <span class="service-chip"><app-icon [name]="service.icon"></app-icon>{{ service.label }}</span>
+                        <span class="service-chip" [attr.data-service]="service.id"><app-icon [name]="service.icon"></app-icon>{{ service.label }}</span>
                       } @empty {
                         <span class="service-chip transport"><app-icon name="truck"></app-icon>Só transporte</span>
                       }

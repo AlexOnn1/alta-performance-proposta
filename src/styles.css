@@ -7,13 +7,16 @@
   --font-sans: "Segoe UI", system-ui, sans-serif;
   --color-brand: #871812;
   --color-brand-dark: #68100c;
+  --color-wine: #351512;
+  --color-copper: #964c34;
+  --color-paper: #fff7ef;
   --color-canvas: #fcfaf9;
   --color-ink: #282221;
   --color-muted: #665a56;
-  --color-line: #eadfda;
-  --color-tint: #fbefed;
+  --color-line: #e7dcd4;
+  --color-tint: #faeee9;
   --spacing: .25rem;
-  --radius-panel: 1.125rem;
+  --radius-panel: 1rem;
 }
 
 @layer base {
@@ -45,41 +48,74 @@
     stroke-linecap: round; stroke-linejoin: round;
   }
   .masthead { @apply border-t-4 border-t-brand border-b border-b-line bg-white; }
-  .masthead-content { @apply flex min-h-28 items-center justify-between gap-5 py-4; }
+  .masthead-content { @apply flex min-h-24 items-center justify-between gap-5 py-3; }
   .brand { @apply flex min-w-0 items-center gap-4; }
-  .brand-logo { @apply size-21 shrink-0 object-contain; }
+  .brand-logo { @apply size-18 shrink-0 object-contain; }
   .brand-context {
     @apply text-brand font-bold uppercase;
     font-size: .67rem; letter-spacing: .115em;
   }
-  .brand-context span { @apply mx-1 text-muted; }
   .brand h1 { @apply mt-1 text-2xl font-bold leading-tight tracking-tight; }
   .demo-label {
     @apply inline-flex shrink-0 items-center gap-2 rounded-full border border-line bg-canvas px-3 py-1.5 text-xs font-semibold text-muted;
   }
-  .demo-label span { @apply size-1.5 rounded-full bg-brand; }
-  .view-header { @apply flex items-center justify-between gap-4 pt-8 pb-5; }
+  .demo-label .icon { @apply size-4 text-brand; }
+  .moving-hero {
+    @apply relative isolate mt-6 grid overflow-hidden rounded-panel bg-wine;
+    grid-template-columns: minmax(0, 1fr) minmax(0, .83fr);
+    min-height: 16rem;
+  }
+  .moving-hero-copy {
+    @apply relative z-10 self-center py-7 pl-10 pr-5 text-white;
+  }
+  .moving-hero-location {
+    @apply inline-flex items-center gap-2 text-xs font-bold uppercase;
+    color: #ffd9c0;
+    letter-spacing: .11em;
+  }
+  .moving-hero h2 {
+    @apply mt-3 font-bold leading-none;
+    font-size: clamp(2.35rem, 4.35vw, 4rem);
+    letter-spacing: -.055em;
+  }
+  .moving-hero p {
+    @apply mt-3 max-w-[34ch] text-sm leading-relaxed;
+    color: #f6ded2;
+  }
+  .moving-hero-image {
+    @apply relative self-stretch;
+    background-color: #78392a;
+    background-image: linear-gradient(90deg, #351512 0%, #35151200 38%), url('/carga-da-mudanca.webp');
+    background-position: center, center 52%;
+    background-size: cover;
+  }
+  .moving-hero::after {
+    content: "";
+    @apply pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1;
+    background: repeating-linear-gradient(125deg, #eab798 0 10px, var(--color-copper) 10px 20px);
+  }
+  .view-header { @apply flex items-center justify-between gap-4 pt-7 pb-4; }
   .view-title { @apply text-3xl font-bold tracking-tight; }
-  .view-switch { @apply grid grid-cols-2 gap-1 rounded-xl border border-line bg-white p-1; }
+  .view-switch { @apply grid grid-cols-2 gap-1 rounded-xl border border-line bg-paper p-1; }
   .view-switch button { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold text-muted; }
   .view-switch button:hover { @apply bg-canvas text-brand; }
   .view-switch button[aria-current] { @apply bg-brand text-white; }
   .client-layout, .team-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, 19rem); gap: 1.5rem; align-items: start; }
   .panel {
     @apply min-w-0 rounded-panel border border-line bg-white;
-    box-shadow: 0 2px 3px #40252108, 0 10px 28px #40252106;
+    box-shadow: 0 8px 26px #35151209;
   }
-  .stepper { @apply mb-4 rounded-xl border border-line bg-white p-2; }
+  .stepper { @apply mb-4 rounded-xl border border-line bg-paper p-2; }
   .stepper ol { @apply grid grid-cols-3 gap-2; }
   .step { @apply flex min-h-12 w-full items-center gap-2 rounded-lg px-2.5 text-left text-sm font-semibold leading-tight text-muted; }
   .step:hover { @apply bg-canvas; }
-  .step.active { @apply bg-tint text-brand; }
+  .step.active { @apply bg-white text-brand; box-shadow: inset 0 -2px var(--color-brand), 0 2px 4px #35151212; }
   .step.completed { @apply text-brand; }
   .step-number { @apply grid size-7 shrink-0 place-items-center rounded-full border border-line bg-canvas text-xs font-bold; }
   .step-number .icon { width: .9rem; height: .9rem; }
   .step.active .step-number { @apply border-brand bg-brand text-white; }
   .step.completed .step-number { @apply border-transparent bg-tint; }
-  .form-heading { @apply border-b border-line px-7 py-5; }
+  .form-heading { @apply rounded-t-panel border-b border-line bg-paper px-7 py-5; }
   .form-heading h2, .form-heading h3 { @apply text-2xl font-bold leading-tight tracking-tight; }
   .form-heading p:not(.generated) { @apply mt-1 text-sm leading-relaxed text-muted; }
   .form-section { @apply min-w-0 px-7 py-4; }
@@ -112,7 +148,7 @@
   .text-button { @apply px-2 text-brand; }
   .text-button:hover { @apply bg-tint; }
   .sidebar { @apply grid min-w-0 gap-4; }
-  .sidebar-summary { @apply p-5; }
+  .sidebar-summary { @apply border-t-4 border-t-brand p-5; }
   .sidebar-head { @apply flex items-center gap-2.5; }
   .sidebar-head h2 { @apply text-base font-bold; }
   .mini-route { @apply my-4; }
@@ -133,9 +169,8 @@
   .sidebar-fact:last-child { @apply pb-0; }
   .demo-card {
     @apply min-w-0 rounded-panel p-5 text-white;
-    background-color: var(--color-brand);
-    background-image: radial-gradient(circle at 1px 1px,#ffffff24 1px,transparent 0);
-    background-size: 16px 16px;
+    background-color: var(--color-wine);
+    background-image: repeating-linear-gradient(130deg, transparent 0 32px, #eab79814 32px 33px);
   }
   .demo-icon { @apply mb-3 grid size-8 place-items-center rounded-lg bg-white/15; }
   .demo-card h2 { @apply text-lg leading-tight font-bold tracking-tight; }
@@ -172,7 +207,7 @@
   .route-facts dt app-icon { @apply text-brand; }
   .route-facts dd { @apply text-base font-semibold; }
   .review-room { @apply mt-3 min-w-0 rounded-xl border border-line; }
-  .review-room h4 { @apply flex items-center gap-2 rounded-t-xl border-b border-line bg-canvas px-4 py-2.5 font-bold text-brand; }
+  .review-room h4 { @apply flex items-center gap-2 rounded-t-xl border-b border-line bg-paper px-4 py-2.5 font-bold text-brand; }
   .review-room ul { @apply divide-y divide-line; }
   .review-room li { @apply px-4 py-3; }
   .service-list { @apply mt-1.5 flex flex-wrap items-start gap-1.5; }
@@ -181,11 +216,15 @@
     overflow-wrap: anywhere;
   }
   .service-chip .icon { @apply size-3.5; }
+  .service-chip[data-service="packing"] { color: #75451c; background-color: #faedd9; }
+  .service-chip[data-service="assembly"] { color: #315b50; background-color: #e5f0ea; }
   .service-chip.transport { @apply bg-canvas text-muted; --wheel: var(--color-canvas); }
   .generated { @apply mb-3 inline-flex items-center gap-1.5 rounded-full bg-tint px-2.5 py-1 text-sm font-bold text-brand; }
   .team-details { @apply border-b border-line; }
+  .team-details .route-facts { @apply border border-line bg-paper; }
+  .team-main { @apply border-t-4 border-t-brand; }
   .team-inventory { @apply pb-6; }
-  .team-actions { @apply grid gap-2 p-5; }
+  .team-actions { @apply grid gap-2 border-t-4 border-t-brand p-5; }
   .team-actions h3 { @apply mb-2; }
   .copy-status { @apply text-sm font-semibold text-brand; }
   .copy-status:empty { display: none; }
@@ -212,6 +251,16 @@
 
 @media (max-width: 570px) {
   .masthead-content { flex-wrap: wrap; min-height: 0; gap: .375rem; padding-block: .75rem; }
+  .moving-hero { grid-template-columns: minmax(0, 1fr); min-height: 0; margin-top: .875rem; }
+  .moving-hero-copy { padding: 1.125rem 1rem 1.3rem; }
+  .moving-hero h2 { font-size: clamp(2.05rem, 8.5vw, 3.2rem); }
+  .moving-hero p { font-size: .83rem; max-width: 27ch; }
+  .moving-hero-image {
+    position: absolute;
+    inset: 0 0 0 31%;
+    opacity: .36;
+    background-image: linear-gradient(90deg, #351512, #35151200 75%), url('/carga-da-mudanca.webp');
+  }
   .brand { gap: .625rem; }
   .brand-logo { width: 4.5rem; height: 4.5rem; }
   .brand-context { letter-spacing: .07em; font-size: .59rem; }
