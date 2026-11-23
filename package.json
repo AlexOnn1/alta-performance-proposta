@@ -1,0 +1,34 @@
+{
+  "name": "alta-performance-mudancas",
+  "version": "1.0.0",
+  "private": true,
+  "engines": { "node": "^20.19.0 || ^22.12.0 || >=24.0.0" },
+  "scripts": {
+    "compile:react": "tsc -p tsconfig.react.json",
+    "prestart": "npm run compile:react",
+    "start": "node scripts/dev.mjs",
+    "prebuild": "npm run compile:react",
+    "build": "ng build"
+  },
+  "dependencies": {
+    "@angular/common": "~20.3.0",
+    "@angular/compiler": "~20.3.0",
+    "@angular/core": "~20.3.0",
+    "@angular/platform-browser": "~20.3.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "rxjs": "^7.8.2",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@angular/build": "~20.3.0",
+    "@angular/cli": "~20.3.0",
+    "@angular/compiler-cli": "~20.3.0",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.13",
+    "typescript": "~5.9.2"
+  }
+}

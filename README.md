@@ -41,4 +41,3 @@ O comando compila o módulo React e gera a aplicação em `dist/alta-performance
 - `src/shared/order.ts` define o modelo, a validação, o exemplo e a formatação da ficha. A equipe vê a versão que o cliente confirmou, e uma nova confirmação atualiza a ficha.
 - `src/styles.css` concentra os tokens, o Tailwind e sua detecção de classes para os templates e o código Angular e React. `public/alta-performance.png` é uma cópia do PNG original.
 
-

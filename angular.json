@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "projects": {
+    "alta-performance": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "index": "src/index.html",
+            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/alta-performance",
+            "assets": [{ "glob": "**/*", "input": "public" }],
+            "styles": ["src/styles.css"],
+            "allowedCommonJsDependencies": ["react", "react-dom"]
+          },
+          "configurations": {
+            "development": { "optimization": false, "sourceMap": true },
+            "production": { "outputHashing": "all" }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": { "buildTarget": "alta-performance:build:development" }
+        }
+      }
+    }
+  },
+  "cli": { "analytics": false }
+}

@@ -1,0 +1,114 @@
+<header class="masthead">
+  <div class="page-width masthead-content">
+    <div class="brand">
+      <img src="alta-performance.png" width="84" height="84" alt="Alta Performance Mudanças" class="brand-logo">
+      <div class="min-w-0">
+        <div class="brand-context">Alta Performance Mudanças <span aria-hidden="true">/</span> Curitiba, PR</div>
+        <h1>Pedido de orçamento de mudança</h1>
+      </div>
+    </div>
+    <span class="demo-label"><span aria-hidden="true"></span>Demonstração</span>
+  </div>
+</header>
+
+<main class="page-width">
+  <div class="view-header">
+    <h2 class="view-title" #viewTitle tabindex="-1">{{ view() === 'customer' ? 'Seu pedido' : 'Ficha de orçamento' }}</h2>
+    <nav class="view-switch" aria-label="Visões da demonstração">
+      <button type="button" [attr.aria-current]="view() === 'customer' ? 'page' : null" (click)="showView('customer')">
+        <app-icon name="user"></app-icon><span>Visão do cliente</span>
+      </button>
+      <button type="button" [attr.aria-current]="view() === 'team' ? 'page' : null" (click)="showView('team')">
+        <app-icon name="clipboard"></app-icon><span>Visão da equipe</span>
+      </button>
+    </nav>
+  </div>
+  @if (view() === 'customer') {
+    <app-react-host [order]="order()" [step]="step()" (orderChange)="order.set($event)"
+      (stepChange)="step.set($event)" (confirmed)="confirm($event)"></app-react-host>
+  } @else if (sheet(); as data) {
+    <div class="team-layout">
+      <section class="panel team-main" aria-label="Ficha da mudança">
+        <div class="form-heading">
+          <p class="generated" role="status"><app-icon name="check"></app-icon>Ficha de demonstração gerada</p>
+          <h3>Trajeto e acesso</h3>
+        </div>
+        <div class="form-section team-details">
+          <dl class="route-facts">
+            @for (entry of addresses; track entry.id) {
+              <div>
+                <dt><app-icon [name]="entry.id === 'origin' ? 'pin' : 'flag'"></app-icon>{{ entry.label }}</dt>
+                <dd>{{ address(data[entry.id]) }}</dd>
+              </div>
+            }
+            <div>
+              <dt><app-icon name="calendar"></app-icon>Data prevista</dt>
+              <dd>{{ date(data) }}</dd>
+            </div>
+            <div>
+              <dt><app-icon name="info"></app-icon>Observações de acesso</dt>
+              <dd class="whitespace-pre-wrap">{{ data.accessNotes.trim() || 'Não informadas' }}</dd>
+            </div>
+          </dl>
+        </div>
+        <div class="form-section team-inventory">
+          <h3>Itens por cômodo</h3>
+          @for (room of rooms(data); track room.id) {
+            <section class="review-room" [attr.aria-labelledby]="'team-room-' + room.id">
+              <h4 [id]="'team-room-' + room.id"><app-icon [name]="roomIcon(room.name)"></app-icon>{{ room.name }}</h4>
+              <ul>
+                @for (item of room.items; track item.id) {
+                  <li class="team-item">
+                    <div class="item-identity">
+                      <span class="quantity" [attr.aria-label]="'Quantidade: ' + item.quantity">{{ item.quantity }} ×</span>
+                      <div class="min-w-0">
+                        <strong>{{ item.name }}</strong>
+                        @if (item.notes.trim()) {
+                          <p class="item-note">{{ item.notes }}</p>
+                        }
+                      </div>
+                    </div>
+                    <div class="service-list" aria-label="Serviços solicitados">
+                      @for (service of services(item); track service.id) {
+                        <span class="service-chip"><app-icon [name]="service.icon"></app-icon>{{ service.label }}</span>
+                      } @empty {
+                        <span class="service-chip transport"><app-icon name="truck"></app-icon>Só transporte</span>
+                      }
+                    </div>
+                  </li>
+                }
+              </ul>
+            </section>
+          }
+        </div>
+      </section>
+      <aside class="panel team-actions" aria-label="Ações da ficha">
+        <h3>Ações da ficha</h3>
+        <button type="button" class="button primary" (click)="copySummary(data)"><app-icon name="copy"></app-icon>Copiar resumo</button>
+        <button type="button" class="button outline" (click)="returnToOrder()"><app-icon name="arrow-left"></app-icon>Voltar ao pedido</button>
+        <p class="copy-status" role="status">{{ copyStatus() }}</p>
+        @if (manualCopy()) {
+          <label class="field-label" for="manual-summary">Resumo em texto</label>
+          <textarea id="manual-summary" readonly rows="5" [value]="manualCopy()" (focus)="$any($event.target).select()"></textarea>
+        }
+      </aside>
+    </div>
+  } @else {
+    <section class="panel team-empty">
+      <span class="icon-tile"><app-icon name="clipboard"></app-icon></span>
+      <h3>A ficha ainda não foi gerada</h3>
+      <p>Preencha o pedido e gere a ficha na etapa de revisão.</p>
+      <button type="button" class="button primary" (click)="returnToOrder()">Voltar ao pedido<app-icon name="arrow-right"></app-icon></button>
+    </section>
+  }
+</main>
+
+<footer class="page-width page-footer">
+  <span>Alta Performance Mudanças · Curitiba, PR</span>
+  <span>Demonstração local · Dados fictícios</span>
+</footer>
+
+<aside class="proposal-watermark" aria-label="Prévia de proposta criada por AlexOn Dev">
+  <img src="alexon-dev-watermark.webp" alt="" width="44" height="44">
+  <div><strong>Alex<span>On</span> Dev</strong><small>Prévia de proposta</small></div>
+</aside>
